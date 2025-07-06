@@ -1,0 +1,7 @@
+gspread
+pandas
+mysql-connector-python
+gspread
+oauth2client
+dbt-core
+dbt-mysql
