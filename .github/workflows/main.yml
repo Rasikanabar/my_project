@@ -43,6 +43,10 @@ jobs:
               EOF
           python ingest/data_connect.py
 
+      -  name: Check MySQL tables
+         run:  |
+          mysql -h 127.0.0.1 -u root -proot -e "SHOW TABLES IN data_ingestion;"
+
       - name: Set up dbt profile
         run: |
           mkdir -p ~/.dbt
