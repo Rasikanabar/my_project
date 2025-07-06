@@ -54,7 +54,7 @@ jobs:
           echo "      host: '${{ secrets.MYSQL_HOST }}'" >> ~/.dbt/profiles.yml
           echo "      user: '${{ secrets.MYSQL_USER }}'" >> ~/.dbt/profiles.yml
           echo "      password: '${{ secrets.MYSQL_PASSWORD }}'" >> ~/.dbt/profiles.yml
-          echo "      schema: your_db_name" >> ~/.dbt/profiles.yml
+          echo "      schema: '${{ secrets.DBT_SCHEMA }}'" >> ~/.dbt/profiles.yml
           echo "      threads: 1" >> ~/.dbt/profiles.yml
           echo "      port: 3306" >> ~/.dbt/profiles.yml
 
