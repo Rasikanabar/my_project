@@ -6,3 +6,6 @@ oauth2client
 dbt-core
 dbt-mysql
 dotenv
+sqlalchemy
+os
+urllib.parse
