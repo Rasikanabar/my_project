@@ -42,28 +42,7 @@ jobs:
                 ${{ secrets.GDRIVE_CREDENTIALS_JSON }}
               EOF
           python ingest/data_connect.py
-         name: Wait for MySQL to be ready
-          run: |
-            for i in {1..30}; do
-            if mysqladmin ping -h 127.0.0.1 -u root -proot --silent; then
-              echo "MySQL is up"
-              break
-            fi
-            echo "Waiting for MySQL..."
-            sleep 2
-          done
-
-      - name: Create MySQL user with % access
-        run: |
-          mysql -h 127.0.0.1 -u root -proot -e "
-            CREATE USER IF NOT EXISTS 'dbt_user'@'%' IDENTIFIED BY 'dbt_pass';
-            GRANT ALL PRIVILEGES ON *.* TO 'dbt_user'@'%';
-            FLUSH PRIVILEGES;"
-
-      -  name: Check MySQL tables
-         run:  |
-          mysql -h 127.0.0.1 -u dbt_user -pdbt_pass -e "SHOW TABLES IN data_ingestion;"
-
+          
       - name: Set up dbt profile
         run: |
           mkdir -p ~/.dbt
