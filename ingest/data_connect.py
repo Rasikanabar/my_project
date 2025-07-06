@@ -65,7 +65,7 @@ host=os.environ("MYSQL_HOST")
 user=os.environ("MYSQL_USER")
 password=os.environ("MYSQL_PASSWORD")
 password = quote_plus(password)
-database=os.environ("MYSQL_DB")
+database=os.environ("DBT_SCHEMA")
 port = 3306
 
 print(password)
