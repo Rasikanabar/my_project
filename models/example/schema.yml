@@ -1,0 +1,26 @@
+
+version: 2
+
+models:
+  - name: staging
+    description: Staging model for vehicle data
+
+    columns:
+      - name: STATE
+        description: Incident status/state
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['open', 'closed', 'resolved']
+
+      - name: VEHICLE_ID
+        description: VEHICLE_ID check
+        tests:
+          - not_null
+sources:
+  - name: data_ingestion
+    database: data_ingestion
+    schema: data_ingestion
+    tables:
+      - name: issues_raw
+      

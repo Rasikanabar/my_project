@@ -1,0 +1,58 @@
+
+/*
+    Welcome to your first dbt model!
+    Did you know that you can also configure models directly within SQL files?
+    This will override configurations stated in dbt_project.yml
+
+    Try changing "table" to "view" below
+*/
+
+{{ config(materialized='table') }}
+
+SELECT
+  DESCRIPTION,
+  CREATED_BY_ID,
+  CLOSED_BY_ID,
+  VEHICLE_ID,
+  VEHICLE_METER_VALUE,
+  VEHICLE_METER_UNIT,
+  CASE
+    WHEN VEHICLE_METER_AT IS NOT NULL AND VEHICLE_METER_AT != ''
+         AND LENGTH(VEHICLE_METER_AT) >= 19 THEN
+      STR_TO_DATE(SUBSTRING(VEHICLE_METER_AT, 1, 19), '%Y-%m-%dT%H:%i:%s')
+    ELSE NULL
+  END AS VEHICLE_METER_AT_PARSED, 
+  CASE
+    WHEN REPORTED_AT IS NOT NULL AND REPORTED_AT != ''
+         AND LENGTH(REPORTED_AT) >= 19 THEN
+      STR_TO_DATE(SUBSTRING(REPORTED_AT, 1, 19), '%Y-%m-%dT%H:%i:%s')
+    ELSE NULL
+  END AS REPORTED_AT_PARSED, 
+  CASE
+    WHEN RESOLVED_AT IS NOT NULL AND RESOLVED_AT != ''
+         AND LENGTH(RESOLVED_AT) >= 19 THEN
+      STR_TO_DATE(SUBSTRING(RESOLVED_AT, 1, 19), '%Y-%m-%dT%H:%i:%s')
+    ELSE NULL
+  END AS RESOLVED_AT_PARSED, 
+  RESOLVED_NOTE,
+  STATE,
+  CASE
+    WHEN CREATED_AT IS NOT NULL AND CREATED_AT != ''
+         AND LENGTH(CREATED_AT) >= 19 THEN
+      STR_TO_DATE(SUBSTRING(CREATED_AT, 1, 19), '%Y-%m-%dT%H:%i:%s')
+    ELSE NULL
+  END AS CREATED_AT_PARSED,
+  CASE
+    WHEN UPDATED_AT IS NOT NULL AND UPDATED_AT != ''
+         AND LENGTH(UPDATED_AT) >= 19 THEN
+      STR_TO_DATE(SUBSTRING(UPDATED_AT, 1, 19), '%Y-%m-%dT%H:%i:%s')
+    ELSE NULL
+  END AS UPDATED_AT_PARSED
+FROM {{ source('data_ingestion', 'issues_raw') }}
+WHERE VEHICLE_ID is not null
+
+/*
+    Uncomment the line below to remove records with null `id` values
+*/
+
+-- where id is not null
