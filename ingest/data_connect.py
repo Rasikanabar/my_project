@@ -21,7 +21,7 @@ scope = [
     'https://spreadsheets.google.com/feeds',
     'https://www.googleapis.com/auth/drive'
 ]
-creds = ServiceAccountCredentials.from_json_keyfile_name('data-ingestion-464816-ae573e49660d.json', scope)
+creds = ServiceAccountCredentials.from_json_keyfile_name('service_account.json', scope)
 
 
 # In[53]:
@@ -55,17 +55,17 @@ df.describe()
 # In[57]:
 
 
-load_dotenv(dotenv_path='cred.env')
+#load_dotenv(dotenv_path='cred.env')
 
 
 # In[67]:
 
 
-host=os.getenv("MYSQL_HOST")
-user=os.getenv("MYSQL_USER")
-password=os.getenv("MYSQL_PASSWORD")
+host=os.environ("MYSQL_HOST")
+user=os.environ("MYSQL_USER")
+password=os.environ("MYSQL_PASSWORD")
 password = quote_plus(password)
-database=os.getenv("MYSQL_DB")
+database=os.environ("MYSQL_DB")
 port = 3306
 
 print(password)
