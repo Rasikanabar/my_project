@@ -26,6 +26,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
+          pip install -r requirements.txt
           
       - name: Run Python ingestion pipeline
         run: python ingest/data_connect.py
