@@ -29,7 +29,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Python ingestion pipeline
-        run: python run_pipeline.py
+        run: python data_connect.py
 
       - name: Set up dbt profile
         run: |
