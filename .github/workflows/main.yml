@@ -8,6 +8,14 @@ on:
 jobs:
   run-pipeline:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: my_db
+        ports:
+          - 3306:3306
 
     env:
       MYSQL_USER: ${{ secrets.MYSQL_USER }}
