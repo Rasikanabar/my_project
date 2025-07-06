@@ -1,5 +1,4 @@
 
--- Use the `ref` function to select from other models
 {{ config(materialized='table') }}
 
 select COUNT(*) AS total_issues,
@@ -14,17 +13,3 @@ WHERE REPORTED_AT_PARSED IS NOT NULL
 GROUP by issue_week
 Order by issue_week
 
-
-
-/*SELECT
-  DATE_TRUNC('WEEK', CAST(REPORTED_AT AS DATE)) AS issue_week,
-  COUNT(*) AS total_issues,
-  COUNTIF(STATE = 'resolved') AS resolved_issues,
-  COUNTIF(STATE = 'open') AS open_issues,
-  COUNT(DISTINCT VEHICLE_ID) AS affected_vehicles,
-  MIN(REPORTED_AT) AS first_issue_reported,
-  MAX(REPORTED_AT) AS last_issue_reported
-FROM {{ ref('staging') }}
-WHERE REPORTED_AT IS NOT NULL
-GROUP BY 1
-ORDER BY 1*/
