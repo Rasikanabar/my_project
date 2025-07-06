@@ -28,7 +28,7 @@ jobs:
           pip install --upgrade pip
           
       - name: Run Python ingestion pipeline
-        run: python data_connect.py
+        run: python ingest/data_connect.py
 
       - name: Set up dbt profile
         run: |
