@@ -7,4 +7,4 @@ dbt-core
 dbt-mysql
 dotenv
 sqlalchemy
-urllib.parse
+
