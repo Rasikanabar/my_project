@@ -30,7 +30,9 @@ jobs:
           
       - name: Run Python ingestion pipeline
         run: |
-          echo "${{ secrets.GDRIVE_CREDENTIALS_JSON }}" > service_account.json
+         cat <<EOF > service_account.json
+                ${{ secrets.GDRIVE_CREDENTIALS_JSON }}
+              EOF
           python ingest/data_connect.py
 
       - name: Set up dbt profile
