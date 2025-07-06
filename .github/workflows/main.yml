@@ -1,0 +1,50 @@
+name: Data Pipeline CI
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    env:
+      MYSQL_USER: ${{ secrets.MYSQL_USER }}
+      MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+      MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Python ingestion pipeline
+        run: python run_pipeline.py
+
+      - name: Set up dbt profile
+        run: |
+          mkdir -p ~/.dbt
+          echo "your_profile_name:" >> ~/.dbt/profiles.yml
+          echo "  target: dev" >> ~/.dbt/profiles.yml
+          echo "  outputs:" >> ~/.dbt/profiles.yml
+          echo "    dev:" >> ~/.dbt/profiles.yml
+          echo "      type: mysql" >> ~/.dbt/profiles.yml
+          echo "      host: '${{ secrets.MYSQL_HOST }}'" >> ~/.dbt/profiles.yml
+          echo "      user: '${{ secrets.MYSQL_USER }}'" >> ~/.dbt/profiles.yml
+          echo "      password: '${{ secrets.MYSQL_PASSWORD }}'" >> ~/.dbt/profiles.yml
+          echo "      schema: your_db_name" >> ~/.dbt/profiles.yml
+          echo "      threads: 1" >> ~/.dbt/profiles.yml
+          echo "      port: 3306" >> ~/.dbt/profiles.yml
+
+      - name: Run dbt models
+        run: dbt run --project-dir dbt_project
