@@ -34,7 +34,7 @@ jobs:
       - name: Set up dbt profile
         run: |
           mkdir -p ~/.dbt
-          echo "your_profile_name:" >> ~/.dbt/profiles.yml
+          echo "my_project:" >> ~/.dbt/profiles.yml
           echo "  target: dev" >> ~/.dbt/profiles.yml
           echo "  outputs:" >> ~/.dbt/profiles.yml
           echo "    dev:" >> ~/.dbt/profiles.yml
@@ -47,4 +47,4 @@ jobs:
           echo "      port: 3306" >> ~/.dbt/profiles.yml
 
       - name: Run dbt models
-        run: dbt run --project-dir dbt_project
+        run: dbt run 
