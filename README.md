@@ -1,15 +1,7 @@
-Welcome to your new dbt project!
+Welcome to the project -
 
-### Using the starter project
-
-Try running the following commands:
-- dbt run
-- dbt test
-
-
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+Logic to get the data from google drive into MySQL is written in python and same file is available in ingest/data_connect.py folder.
+In local MySQL database, data_ingestion database is created -
+1) Data from google drive is written into issues_raw table
+2) Tranformation is done in dbt core in staging(Clean and transformed data) and modeled(Week over week data) models.
+3) Tests are implemented in schema.yml
